@@ -152,7 +152,7 @@ class GithubRAG:
         code_splitter = RecursiveCharacterTextSplitter(
             chunk_size=2000,
             chunk_overlap=200,
-            separator_character=["\nclass ", "\ndef ", "\nfunction ", "\n\n", "\n", " ", ""]
+            separators=["\nclass ", "\ndef ", "\nfunction ", "\n\n", "\n", " ", ""]
         )
         doc_splitter = RecursiveCharacterTextSplitter(
             chunk_size=1000,
@@ -221,7 +221,8 @@ class GithubRAG:
         """
         self.vector_store = FAISS.load_local(
             folder_path=path,
-            embeddings=self.embedding_model
+            embeddings=self.embedding_model,
+            allow_dangerous_deserialization=True  # Explicitly allow deserialization
         )
         print(f"Loaded vector store from {path}")
 
