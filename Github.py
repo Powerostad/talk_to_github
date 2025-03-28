@@ -209,7 +209,7 @@ class GithubRAG:
         if self.vector_store is None:
             raise ValueError("Vector store has not created yet")
 
-        self.vector_store.save_local(path)
+        self.vector_store.save_local("vector_dbs/" + path)
         print(f"Saved vector store to {path}")
 
     def load_vector_store(self, path: str) -> None:
@@ -220,7 +220,7 @@ class GithubRAG:
             path: Path to load the vector store from
         """
         self.vector_store = FAISS.load_local(
-            folder_path=path,
+            folder_path="vector_dbs/" + path,
             embeddings=self.embedding_model,
             allow_dangerous_deserialization=True  # Explicitly allow deserialization
         )
