@@ -1,85 +1,72 @@
-# GitHub Code RAG System
+# GitHub Code RAG
 
-A simple Retrieval Augmented Generation (RAG) system for analyzing GitHub code repositories using Groq for inference.
+## Overview
+
+GitHub Code RAG is a Retrieval-Augmented Generation (RAG) system that allows users to interactively query a GitHub repository's codebase using natural language. This project utilizes powerful language models for querying, helping users gain insights about codebases easily.
 
 ## Features
 
-- Clone and process GitHub repositories
-- Extract and chunk code files and documentation
-- Create vector embeddings using Sentence Transformers
-- Store vector embeddings using FAISS
-- Query the knowledge base using natural language
-- Leverage Groq's powerful LLM models for generation
+- Clone and analyze any GitHub repository.
+- Process and chunk repository files for efficient querying.
+- Create and save vector stores for rapid data retrieval.
+- Interactive querying interface with natural language.
 
-## Setup
+## Prerequisites
 
-1. Clone this repository
-2. Install the dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
-3. Create a `.env` file in the project root with your Groq API key:
-   ```
-   GROQ_API_KEY=your_api_key_here
-   ```
+- Python 3.x
+- [dotenv](https://pypi.org/project/python-dotenv/) package
+- [FAISS](https://github.com/facebookresearch/faiss) library
+- Groq API key (set as `GROQ_API_KEY` in your environment)
+
+## Installation
+
+1. Clone this repository:
+
+    ```bash
+    git clone https://github.com/your-username/GitHub_Code_RAG.git
+    cd GitHub_Code_RAG
+    ```
+
+2. Install required Python packages:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+   
+3. Set up your environment variables by creating a `.env` file:
+
+    ```
+    GROQ_API_KEY=your_groq_api_key_here
+    ```
 
 ## Usage
 
-### Basic Usage
+1. Run the main script:
 
-```python
-# Initialize the RAG system
-from github_rag import GitHubRAG
+    ```bash
+    python main.py
+    ```
 
-# Create a new instance with your API key (or use .env)
-rag = GitHubRAG()
+2. When prompted, enter the GitHub repository URL you wish to analyze. If left blank, the default repository is `https://github.com/langchain-ai/langchain`.
 
-# Clone a repository
-repo_path = rag.clone_github_repo("https://github.com/username/repo", "repos")
+3. Follow the interactive prompts to query the repository's codebase:
 
-# Process the repository into documents
-documents = rag.process_repository(repo_path)
+   - Type any natural language question about the repository.
+   - Type 'quit' or 'exit' to end the session.
 
-# Create document chunks
-chunks = rag.create_code_chunks(documents)
+## Code Structure
 
-# Create the vector store
-rag.create_vector_store(chunks)
+- `main.py`: Entry point of the application, handling setup and interactive querying.
+- `Github.py`: Contains the `GithubRAG` class, responsible for repository processing and interaction with the vector store.
 
-# Save the vector store
-rag.save_vector_store("my_vector_store")
+## Contributing
 
-# Query the RAG system
-answer = rag.query("How does the authentication system work?")
-print(answer)
-```
+Contributions are welcome! Please fork the repository and submit pull requests for bug fixes, improvements, and new features.
 
-### Loading an Existing Vector Store
+## License
 
-```python
-# Initialize the RAG system
-rag = GitHubRAG()
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-# Load a previously saved vector store
-rag.load_vector_store("my_vector_store")
+## Acknowledgments
 
-# Query the RAG system
-answer = rag.query("Explain the project structure")
-print(answer)
-```
-
-## Customization
-
-You can customize the RAG system in several ways:
-
-- Change the Groq model by passing `model_name` to the constructor
-- Adjust the chunking strategy in `create_code_chunks()`
-- Modify the prompt template in `query()`
-- Change the number of retrieved chunks with `k` parameter in `query()`
-
-## Limitations
-
-- Large repositories may take a while to process
-- Binary files and very large files are skipped
-- The system is designed for code understanding but may not capture all context
-- Performance depends on the quality of the embeddings and the LLM
+Special thanks to the teams behind the tools and libraries utilized by this project.
